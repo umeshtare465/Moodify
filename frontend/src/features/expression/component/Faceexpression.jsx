@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { detect, init } from "../utils";
-
+import "./button.scss";
 export default function FaceExpression() {
   const videoRef = useRef(null);
   const landmarkerRef = useRef(null);

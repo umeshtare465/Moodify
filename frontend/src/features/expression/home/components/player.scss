@@ -72,7 +72,7 @@
     .player-controls {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
 
       .control-btn {
         background: none;
@@ -85,29 +85,62 @@
         align-items: center;
         justify-content: center;
         transition: all 0.2s ease;
-        font-size: 16px;
+        position: relative;
+        width: 32px;
+        height: 32px;
+
+        svg {
+          width: 16px;
+          height: 16px;
+        }
 
         &:hover {
           color: white;
           background-color: rgba(255, 255, 255, 0.1);
+          transform: scale(1.05);
+        }
+
+        &:active {
+          transform: scale(0.95);
         }
 
         &.play-btn {
           background-color: white;
           color: black;
-          width: 32px;
-          height: 32px;
-          font-size: 14px;
+          width: 40px;
+          height: 40px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+          svg {
+            width: 18px;
+            height: 18px;
+          }
 
           &:hover {
-            transform: scale(1.05);
+            transform: scale(1.08);
             background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+          }
+
+          &:active {
+            transform: scale(0.92);
           }
         }
 
         &.shuffle-btn.active,
         &.repeat-btn.active {
           color: #1db954;
+
+          &:hover {
+            color: #1db954;
+            background-color: rgba(29, 185, 84, 0.1);
+          }
+        }
+
+        // Add subtle animation for better UX
+        &:focus {
+          outline: none;
+          box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
         }
       }
     }
@@ -128,8 +161,17 @@
           cursor: pointer;
           padding: 4px 8px;
           border-radius: 4px;
+          font-weight: 500;
+          min-width: 60px;
+          text-align: center;
 
           &:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+          }
+
+          &:focus {
+            outline: none;
             color: white;
             background-color: rgba(255, 255, 255, 0.1);
           }
@@ -137,6 +179,7 @@
           option {
             background-color: #282828;
             color: white;
+            padding: 8px;
           }
         }
       }

@@ -12,8 +12,13 @@ const Login = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    await handleLogin({ email, password });
-    navigate("/");
+    try {
+      await handleLogin({ email, password });
+      navigate("/");
+    } catch (error) {
+      console.error("Login failed:", error);
+      alert("Login failed. Please check your credentials.");
+    }
   }
   return (
     <main className="login-page">

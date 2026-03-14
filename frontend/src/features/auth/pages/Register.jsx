@@ -14,8 +14,13 @@ const Register = () => {
   const navigate = useNavigate();
   async function handleSubmit(e) {
     e.preventDefault();
-    await handleRegister({ email, password, username });
-    navigate("/");
+    try {
+      await handleRegister({ email, password, username });
+      navigate("/");
+    } catch (error) {
+      console.error("Registration failed:", error);
+      alert("Registration failed. Please try again.");
+    }
   }
   return (
     <main className="register-page">
