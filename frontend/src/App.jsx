@@ -5,12 +5,15 @@ import { AuthProvider } from "./features/auth/Auth.context";
 import { SongContextProvider } from "./features/expression/home/song.context";
 import { RouterProvider } from "react-router";
 import { router } from "./features/app.routes";
+import Player from "./features/expression/home/components/Player";
+
 const App = () => {
   return (
     <div>
       <AuthProvider>
         <SongContextProvider>
           <RouterProvider router={router} />
+          <Player />
         </SongContextProvider>
       </AuthProvider>
     </div>

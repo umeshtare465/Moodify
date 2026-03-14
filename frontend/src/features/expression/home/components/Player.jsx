@@ -37,7 +37,10 @@ const Player = () => {
 
   const handleSeek = (e) => {
     const audio = audioRef.current;
-    const newTime = (e.target.value / 100) * duration;
+    const rect = e.target.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const width = rect.width;
+    const newTime = (clickX / width) * duration;
     audio.currentTime = newTime;
     setCurrentTime(newTime);
   };
@@ -71,38 +74,50 @@ const Player = () => {
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={() => setIsPlaying(false)}
       />
-      <div className="player-controls">
-        <button onClick={skipBackward}>⏪ -5s</button>
-        <button onClick={togglePlayPause}>{isPlaying ? "⏸️" : "▶️"}</button>
-        <button onClick={skipForward}>⏩ +5s</button>
+      <div className="progress-bar-container">
+        <div className="progress-bar-bg" onClick={handleSeek}>
+          <div
+            className="progress-bar-fill"
+            style={{ width: `${(currentTime / duration) * 100}%` }}
+          ></div>
+        </div>
       </div>
-      <div className="progress-container">
-        <span>{formatTime(currentTime)}</span>
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value={(currentTime / duration) * 100 || 0}
-          onChange={handleSeek}
-          className="progress-bar"
-        />
-        <span>{formatTime(duration)}</span>
-      </div>
-      <div className="speed-control">
-        <label>Speed: </label>
-        <select value={playbackRate} onChange={handleSpeedChange}>
-          <option value="0.5">0.5x</option>
-          <option value="1">1x</option>
-          <option value="1.25">1.25x</option>
-          <option value="1.5">1.5x</option>
-          <option value="2">2x</option>
-        </select>
-      </div>
-      <div className="song-info">
-        <img src={song.posterUrl} alt={song.title} width="50" height="50" />
-        <div>
-          <h3>{song.title}</h3>
-          <p>Mood: {song.mood}</p>
+      <div className="player-main">
+        <div className="song-info">
+          <img src={song.posterUrl} alt={song.title} />
+          <div className="song-details">
+            <h4>{song.title}</h4>
+            <p>Mood: {song.mood}</p>
+          </div>
+        </div>
+        <div className="player-controls">
+          <button className="control-btn shuffle-btn">🔀</button>
+          <button className="control-btn" onClick={skipBackward}>
+            ⏮️
+          </button>
+          <button className="control-btn play-btn" onClick={togglePlayPause}>
+            {isPlaying ? "⏸️" : "▶️"}
+          </button>
+          <button className="control-btn" onClick={skipForward}>
+            ⏭️
+          </button>
+          <button className="control-btn repeat-btn">🔁</button>
+        </div>
+        <div className="player-right">
+          <div className="speed-control">
+            <select value={playbackRate} onChange={handleSpeedChange}>
+              <option value="0.5">0.5x</option>
+              <option value="1">1x</option>
+              <option value="1.25">1.25x</option>
+              <option value="1.5">1.5x</option>
+              <option value="2">2x</option>
+            </select>
+          </div>
+          <div className="time-display">
+            <span>{formatTime(currentTime)}</span>
+            <span> / </span>
+            <span>{formatTime(duration)}</span>
+          </div>
         </div>
       </div>
     </div>

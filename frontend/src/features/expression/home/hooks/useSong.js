@@ -1,15 +1,23 @@
-import { getSong } from "../../../../../../backend/src/controllers/song.controllers";
-
 import { useContext, useEffect } from "react";
 import { SongContext } from "../song.context";
+import { getSongs } from "../service/song.api";
 
-export const useSong = ({ children }) => {
+export const useSong = () => {
   const context = useContext(SongContext);
   const { song, setsong, loading, setloading } = context;
   async function handleGetSong({ mood }) {
     setloading(true);
-    const data = await getSong(mood);
-    setsong(data);
+    try {
+      const data = await getSongs(mood);
+      if (data.songs) {
+        setsong(data.songs);
+      } else {
+        console.log("No song found for mood:", mood);
+        // Keep the current song or set a default
+      }
+    } catch (error) {
+      console.error("Error fetching song:", error);
+    }
     setloading(false);
   }
   return { song, loading, handleGetSong };
