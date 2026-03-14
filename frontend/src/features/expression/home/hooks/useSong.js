@@ -4,21 +4,27 @@ import { getSongs } from "../service/song.api";
 
 export const useSong = () => {
   const context = useContext(SongContext);
-  const { song, setsong, loading, setloading } = context;
+  const { song, setsong, songs, setsongs, loading, setloading } = context;
   async function handleGetSong({ mood }) {
     setloading(true);
     try {
       const data = await getSongs(mood);
-      if (data.songs) {
-        setsong(data.songs);
+      if (data.songs && data.songs.length > 0) {
+        setsongs(data.songs);
+        setsong(data.songs[0]); // Set first song as current
       } else {
-        console.log("No song found for mood:", mood);
+        console.log("No songs found for mood:", mood);
         // Keep the current song or set a default
       }
     } catch (error) {
-      console.error("Error fetching song:", error);
+      console.error("Error fetching songs:", error);
     }
     setloading(false);
   }
-  return { song, loading, handleGetSong };
+
+  const playSong = (selectedSong) => {
+    setsong(selectedSong);
+  };
+
+  return { song, songs, loading, handleGetSong, playSong };
 };

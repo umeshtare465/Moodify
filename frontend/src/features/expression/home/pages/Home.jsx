@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { detect, init } from "../../utils";
 import Player from "../components/Player";
+import SongsList from "../components/SongsList";
 import { useSong } from "../hooks/useSong";
+import "./home.scss";
 
 const Home = () => {
   const { handleGetSong } = useSong();
@@ -41,14 +43,19 @@ const Home = () => {
   };
 
   return (
-    <div style={{ textAlign: "center", paddingBottom: "100px" }}>
-      <video
-        ref={videoRef}
-        style={{ width: "400px", borderRadius: "12px" }}
-        playsInline
-      />
-      <h2>{expression}</h2>
-      <button onClick={handleDetect}>Detect Expression</button>
+    <div className="home-container">
+      <div className="main-content">
+        <div style={{ textAlign: "center", paddingBottom: "20px" }}>
+          <video
+            ref={videoRef}
+            style={{ width: "400px", borderRadius: "12px" }}
+            playsInline
+          />
+          <h2>{expression}</h2>
+          <button onClick={handleDetect}>Detect Expression</button>
+        </div>
+      </div>
+      <SongsList />
     </div>
   );
 };
